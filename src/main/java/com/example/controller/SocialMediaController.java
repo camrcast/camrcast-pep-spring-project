@@ -72,7 +72,7 @@ public class SocialMediaController {
     public ResponseEntity<Message> postMessage(@RequestBody String body){
         try{
             Message m = o.readValue(body, Message.class);
-            if (!accountService.accountExistsById(m.getPosted_by())){
+            if (accountService.accountExistsById(m.getPosted_by()) == null){
                 return new ResponseEntity<Message>(HttpStatus.BAD_REQUEST); 
             }
             else if (messageService.createMessage(m)){
@@ -118,5 +118,12 @@ public class SocialMediaController {
             return new ResponseEntity<Integer>(1, HttpStatus.OK);
         }
         return new ResponseEntity<Integer>(HttpStatus.BAD_REQUEST);
+    }
+
+    @GetMapping(value = "/accounts/{account_id}/messages")
+    @ResponseBody
+    public ResponseEntity<List<Message>> getAllMessagesByUser(@PathVariable("account_id") Integer id){
+        List<Message> messL = messageService.getAllMessagesByUser(id);
+        return new ResponseEntity<List<Message>>(messL, HttpStatus.OK);
     }
 }

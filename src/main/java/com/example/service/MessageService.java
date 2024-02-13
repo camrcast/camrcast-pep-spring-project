@@ -58,4 +58,14 @@ public class MessageService {
         }
         return false;
     }
+
+    public List<Message> getAllMessagesByUser(int id){
+        List<Message> messL = new ArrayList<Message>();
+        for (Message m : messageRepository.findAll()){
+            if (m.getPosted_by().equals(id)){
+                messL.add(m);
+            }
+        }
+        return messL;
+    }
 }

@@ -37,12 +37,12 @@ public class AccountService {
         return null;
     }
 
-    public boolean accountExistsById(int id){
+    public Account accountExistsById(int id){
         for (Account ac : accountRepository.findAll()){
             if (ac.getAccount_id().equals(id)){
-                return true;
+                return ac;
             }
         }
-        return false;
+        return null;
     }
 }
